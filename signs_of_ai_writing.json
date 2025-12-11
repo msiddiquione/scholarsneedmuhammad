@@ -1,0 +1,54 @@
+{
+  "title": "Signs of AI writing",
+  "source": "https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing",
+  "type": "Wikipedia advisory page",
+  "description": "A detailed field guide of writing and formatting patterns typical of AI-generated content, especially on Wikipedia.",
+  "structure": [
+    "Content",
+    "Language and grammar",
+    "Style",
+    "Communication intended for the user",
+    "Markup",
+    "Citations",
+    "Miscellaneous",
+    "Signs of human writing",
+    "Ineffective indicators"
+  ],
+  "notable_insights": {
+    "common_tells": [
+      "Generic praise or exaggeration of subject importance",
+      "Overuse of specific 'AI vocabulary' (e.g., pivotal, underscore, vibrant)",
+      "Section summaries with phrases like 'in summary', 'overall'",
+      "Markdown syntax or mixed formatting styles (e.g., ## headings)",
+      "Overemphasis on notability via namedropping of media coverage",
+      "Use of curly quotation marks and stylized punctuation",
+      "Didactic disclaimers (e.g., 'it's important to note')",
+      "Superficial analyses added to factual statements",
+      "Rule of three structure (triplets of adjectives or phrases)",
+      "Malformed citations or fictional references (broken DOIs, ISBNs)",
+      "Overuse of boldface and structured lists using Markdown format"
+    ],
+    "communication_clues": [
+      "Starts sections with phrases like 'Let's discuss', 'Here is a template...'",
+      "Mentions formatting or user experience directly in text",
+      "Includes phrases clearly not meant for publication (e.g., 'I hope this helps')"
+    ],
+    "technical_flaws": [
+      "Malformed or non-existent templates and infoboxes",
+      "Incorrect wikitext syntax mixed with Markdown or HTML",
+      "References with placeholders (e.g., 2025-XX-XX dates)",
+      "Hallucinated citations or misused fields in citations"
+    ]
+  },
+  "advice": {
+    "use_care": "Signs alone are not conclusive. Use human judgment.",
+    "false_positives": [
+      "Perfect grammar",
+      "Mix of casual and formal tone",
+      "Verbose edit summaries (sometimes written by careful humans)",
+      "Use of emojis (in talk pages)",
+      "Letter-style formatting (especially by new editors)"
+    ],
+    "best_practice": "Do not rely solely on AI detectors; check context, writing patterns, and citation behavior."
+  }
+}
