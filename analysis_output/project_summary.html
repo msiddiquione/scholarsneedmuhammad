@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Academy Enrollment Analysis - Case Study</title>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --accent: #2980b9;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light-bg: #f8f9fa;
+            --border: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .meta-info span {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .toc {
+            background: var(--light-bg);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .toc h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .toc a {
+            color: var(--accent);
+            text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .toc a:hover {
+            background: rgba(41, 128, 185, 0.1);
+        }
+
+        section {
+            margin-bottom: 50px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        section>h2 {
+            background: var(--primary);
+            color: white;
+            padding: 20px 25px;
+            font-size: 1.4rem;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .prompt-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .prompt-box strong {
+            color: var(--warning);
+        }
+
+        h3 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h4 {
+            color: var(--accent);
+            margin: 20px 0 10px;
+        }
+
+        ul,
+        ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:nth-child(even) {
+            background: var(--light-bg);
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8rem;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .code-block .function {
+            color: #dcdcaa;
+        }
+
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: #e8f8ef;
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .chart-container {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: var(--light-bg);
+            border-radius: 8px;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container figcaption {
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .output-file {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .output-file-header {
+            background: #e0e0e0;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-family: monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .output-file-header .file-type {
+            font-size: 0.75rem;
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .output-file-content {
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        .output-file-content pre {
+            margin: 0;
+            font-family: monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .md-content {
+            background: white;
+            padding: 15px;
+            border-left: 3px solid var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .md-content h1,
+        .md-content h2,
+        .md-content h3 {
+            color: var(--primary);
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+        }
+
+        .md-content ul {
+            margin-left: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        @media print {
+            body {
+                max-width: 100%;
+                padding: 20px;
+            }
+
+            section {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>📊 Success Academy Enrollment Analysis</h1>
+        <p>NYC School Enrollment Case Study - Data Science Project</p>
+        <div class="meta-info">
+            <span>📅 December 2024</span>
+            <span>📁 5-Year Dataset (2018-2022)</span>
+            <span>🤖 AI-Enhanced Analysis</span>
+        </div>
+    </header>
+
+    <div class="prompt-box" style="margin: 20px 0;">
+        <strong>ℹ️ About this analysis:</strong>
+        <p>This report contains some AI-generated content (marked with *) to demonstrate Google Gemini's analytical
+            capabilities. The overall methodology, analytical approach, and project design were created by
+            <strong>Muhammad Siddiqui</strong>, with AI assistance used to accelerate the development process. This
+            showcases my ability to leverage generative AI tools to learn quickly and produce comprehensive analyses in
+            a short timeframe. HTML file is completely generated by AI
+        </p>
+    </div>
+
+    <nav class="toc">
+        <h2>📋 Table of Contents</h2>
+        <ul>
+            <li><a href="#prompt">Case Study Prompt</a></li>
+            <li><a href="#market-analysis">1. Overall Market Analysis</a></li>
+            <li><a href="#projections">2. Enrollment Projections</a></li>
+            <li><a href="#dashboard">3. Dashboard Requirements</a></li>
+            <li><a href="#all-outputs">📁 All Generated Outputs</a></li>
+            <li><a href="#visualizations">📈 Visualizations Gallery</a></li>
+            <li><a href="#ai-reports">🤖 AI-Generated Reports*</a></li>
+        </ul>
+    </nav>
+
+    <!-- PROMPT SECTION -->
+    <section id="prompt">
+        <h2>📝 Case Study Prompt</h2>
+        <div class="section-content">
+            <div class="prompt-box">
+                <strong>Original Assignment:</strong>
+                <p>"Enrollment growth is consistently top of mind for Success Academies. In this workbook, we have
+                    provided NYC enrollment details, by school, for the last 5 years."</p>
+            </div>
+
+            <h3>Three Questions to Answer</h3>
+            <ol>
+                <li><strong>Overall Market:</strong> What do you notice? What additional attributes would be beneficial?
+                </li>
+                <li><strong>Projections:</strong> Make a rough 5-year projection. What additional data sources would
+                    help?</li>
+                <li><strong>Dashboard:</strong> High-level requirements for a Looker-style visualization dashboard.</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- MARKET ANALYSIS SECTION -->
+    <section id="market-analysis">
+        <h2>1️⃣ Overall Market Analysis</h2>
+        <div class="section-content">
+
+            <div class="highlight-box">
+                <h4>What I noticed</h4>
+                <p>District school enrollment has been dropping steadily: 39k fewer students from 2018 to 2022 (about 6%
+                    overall). Meanwhile, charter schools as a whole are growing. Other charters picked up 16k students
+                    in
+                    the same period. Success Academy peaked in 2020 at ~16k students but has been flat or slightly down
+                    since.</p>
+                <p>SA schools also run larger than average (492-589 students vs. ~420-450 for district schools).
+                    Probably intentional, but it means they feel any dips more acutely.</p>
+                <h4>What else would help?</h4>
+                <p>The data doesn't tell us <em>why</em> families are choosing (or leaving) SA. It would be useful to
+                    have application/waitlist numbers, student retention by grade, and some geographic context (like
+                    which neighborhoods have the most demand vs. capacity.</p>
+            </div>
+
+            <h3>📊 enrollment_trends.csv</h3>
+            <p>Grouped the raw data by year and school type to get totals, averages, and counts:</p>
+            <div class="code-block"><span class="comment"># analyze_overall_market()</span>
+                trends = df.groupby(['Year', 'School_Type']).agg({
+                'Total Enrollment': ['sum', 'mean', 'count']
+                }).round(2)
+                trends.columns = ['Total_Enrollment', 'Avg_Enrollment', 'School_Count']
+
+                <span class="comment"># save_outputs()</span>
+                market_data['trends'].to_csv(output_dir / 'enrollment_trends.csv', index=False)
+            </div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📊 enrollment_trends.csv</span>
+                    <span class="file-type">CSV - 465 bytes</span>
+                </div>
+                <div class="output-file-content">
+                    <table>
+                        <tr>
+                            <th>Year</th>
+                            <th>School Type</th>
+                            <th>Total Enrollment</th>
+                            <th>Avg per School</th>
+                            <th>School Count</th>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>C (Other Charter)</td>
+                            <td>84,132</td>
+                            <td>449.90</td>
+                            <td>187</td>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>DS (District)</td>
+                            <td>659,369</td>
+                            <td>467.97</td>
+                            <td>1,409</td>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>SA (Success Academy)</td>
+                            <td>14,262</td>
+                            <td>509.36</td>
+                            <td>28</td>
+                        </tr>
+                        <tr>
+                            <td>2019</td>
+                            <td>C</td>
+                            <td>91,073</td>
+                            <td>431.63</td>
+                            <td>211</td>
+                        </tr>
+                        <tr>
+                            <td>2019</td>
+                            <td>DS</td>
+                            <td>655,059</td>
+                            <td>462.29</td>
+                            <td>1,417</td>
+                        </tr>
+                        <tr>
+                            <td>2019</td>
+                            <td>SA</td>
+                            <td>15,277</td>
+                            <td>545.61</td>
+                            <td>28</td>
+                        </tr>
+                        <tr>
+                            <td>2020</td>
+                            <td>C</td>
+                            <td>95,760</td>
+                            <td>439.27</td>
+                            <td>218</td>
+                        </tr>
+                        <tr>
+                            <td>2020</td>
+                            <td>DS</td>
+                            <td>643,533</td>
+                            <td>445.35</td>
+                            <td>1,445</td>
+                        </tr>
+                        <tr>
+                            <td>2020</td>
+                            <td>SA</td>
+                            <td>15,913</td>
+                            <td>589.37</td>
+                            <td>27</td>
+                        </tr>
+                        <tr>
+                            <td>2021</td>
+                            <td>C</td>
+                            <td>98,952</td>
+                            <td>443.73</td>
+                            <td>223</td>
+                        </tr>
+                        <tr>
+                            <td>2021</td>
+                            <td>DS</td>
+                            <td>626,142</td>
+                            <td>427.98</td>
+                            <td>1,463</td>
+                        </tr>
+                        <tr>
+                            <td>2021</td>
+                            <td>SA</td>
+                            <td>14,278</td>
+                            <td>549.15</td>
+                            <td>26</td>
+                        </tr>
+                        <tr>
+                            <td>2022</td>
+                            <td>C</td>
+                            <td>100,279</td>
+                            <td>445.68</td>
+                            <td>225</td>
+                        </tr>
+                        <tr>
+                            <td>2022</td>
+                            <td>DS</td>
+                            <td>620,093</td>
+                            <td>420.40</td>
+                            <td>1,475</td>
+                        </tr>
+                        <tr>
+                            <td>2022</td>
+                            <td>SA</td>
+                            <td>14,268</td>
+                            <td>492.00</td>
+                            <td>29</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3>📊 demographic_breakdown.csv</h3>
+            <p><strong>How it was generated:</strong></p>
+            <div class="code-block"><span class="comment"># create_visualizations()</span>
+                demo_cols = ['% Female', '% Male', '% Asian', '% Black', '% Hispanic',
+                '% White', '% Students with Disabilities', '% English Language Learners']
+                demo = df.groupby('School_Type')[demo_cols].mean()
+                demo.to_csv(output_dir / 'demographic_breakdown.csv')</div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📊 demographic_breakdown.csv</span>
+                    <span class="file-type">CSV - 594 bytes</span>
+                </div>
+                <div class="output-file-content">
+                    <table>
+                        <tr>
+                            <th>School Type</th>
+                            <th>% Female</th>
+                            <th>% Male</th>
+                            <th>% Asian</th>
+                            <th>% Black</th>
+                            <th>% Hispanic</th>
+                            <th>% White</th>
+                            <th>% w/ Disabilities</th>
+                            <th>% ELL</th>
+                        </tr>
+                        <tr>
+                            <td><strong>SA</strong></td>
+                            <td>51.3%</td>
+                            <td>48.7%</td>
+                            <td>5.8%</td>
+                            <td>47.8%</td>
+                            <td>33.9%</td>
+                            <td>9.1%</td>
+                            <td>16.8%</td>
+                            <td>7.5%</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>49.9%</td>
+                            <td>50.1%</td>
+                            <td>2.8%</td>
+                            <td>46.8%</td>
+                            <td>43.6%</td>
+                            <td>4.4%</td>
+                            <td>20.3%</td>
+                            <td>9.3%</td>
+                        </tr>
+                        <tr>
+                            <td>DS</td>
+                            <td>47.9%</td>
+                            <td>52.1%</td>
+                            <td>13.0%</td>
+                            <td>27.4%</td>
+                            <td>43.7%</td>
+                            <td>12.8%</td>
+                            <td>24.6%</td>
+                            <td>15.2%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3>📊 economic_metrics.csv</h3>
+            <p><strong>How it was generated:</strong></p>
+            <div class="code-block"><span class="comment"># create_visualizations()</span>
+                econ_cols = ['% Poverty', 'Economic Need Index']
+                econ = df.groupby(['Year', 'School_Type'])[econ_cols].mean()
+                econ.to_csv(output_dir / 'economic_metrics.csv')</div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📊 economic_metrics.csv</span>
+                    <span class="file-type">CSV - 729 bytes</span>
+                </div>
+                <div class="output-file-content">
+                    <table>
+                        <tr>
+                            <th>Year</th>
+                            <th>School Type</th>
+                            <th>% Poverty</th>
+                            <th>Economic Need Index</th>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>C</td>
+                            <td>81.6%</td>
+                            <td>0.772</td>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>DS</td>
+                            <td>76.5%</td>
+                            <td>0.743</td>
+                        </tr>
+                        <tr>
+                            <td>2018</td>
+                            <td>SA</td>
+                            <td>73.9%</td>
+                            <td>0.686</td>
+                        </tr>
+                        <tr>
+                            <td>2022</td>
+                            <td>C</td>
+                            <td>82.8%</td>
+                            <td>0.805</td>
+                        </tr>
+                        <tr>
+                            <td>2022</td>
+                            <td>DS</td>
+                            <td>76.9%</td>
+                            <td>0.759</td>
+                        </tr>
+                        <tr>
+                            <td>2022</td>
+                            <td>SA</td>
+                            <td>69.2%</td>
+                            <td>0.740</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTIONS SECTION -->
+    <section id="projections">
+        <h2>2️⃣ Enrollment Projections (2023-2027)</h2>
+        <div class="section-content">
+
+            <div class="highlight-box">
+                <h4>Approach</h4>
+                <p>I used a simple 3-year average growth rate based on 2020-2022 data. This gives about -5.2% per year,
+                    which continues the recent downward trend. I avoided the 2018-2019 numbers because those are
+                    pre-pandemic and mixing them in would muddy the signal.</p>
+                <h4>The caveat</h4>
+                <p>This is a rough projection. It assumes current trends continue as-is. In reality, SA could open new
+                    schools, improve retention, or face more competition. Without application/waitlist data, we can't
+                    tell if the decline is a supply problem (fewer schools) or demand problem (fewer applicants).</p>
+                <h4>Gaps in the data</h4>
+                <p>Application volume trends, age-cohort data from the city, and
+                    student attrition rates by grade. SA's own expansion plans would also help contextualize this.</p>
+            </div>
+
+            <h3>📊 projections.csv</h3>
+            <p>Calculated 3-year rolling growth rate and applied it forward:</p>
+            <div class="code-block"><span class="keyword">def</span> <span
+                    class="function">project_enrollment</span>(df, years_to_project=5):
+                sa_data = df[df['School_Type'] == 'SA']
+                yearly = sa_data.groupby('Year')['Total Enrollment'].sum()
+
+                <span class="comment"># Use last 3 years to get growth rate</span>
+                recent_years = yearly.tail(3)
+                growth_rates = recent_years.pct_change().dropna()
+                avg_growth_rate = growth_rates.mean() <span class="comment"># -5.2%</span>
+
+                <span class="comment"># Build out projections</span>
+                current = yearly.iloc[-1]
+                <span class="keyword">for</span> i <span class="keyword">in</span> range(1, years_to_project + 1):
+                current = current * (1 + avg_growth_rate)
+                projections['Year'].append(last_year + i)
+                projections['Projected_Enrollment'].append(round(current))
+
+                <span class="comment"># save_outputs()</span>
+                projections['projections'].to_csv(output_dir / 'projections.csv', index=False)
+            </div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📊 projections.csv</span>
+                    <span class="file-type">CSV - 178 bytes</span>
+                </div>
+                <div class="output-file-content">
+                    <table>
+                        <tr>
+                            <th>Year</th>
+                            <th>Projected Enrollment</th>
+                            <th>Method</th>
+                        </tr>
+                        <tr>
+                            <td>2023</td>
+                            <td>13,530</td>
+                            <td>3-Year Avg Growth</td>
+                        </tr>
+                        <tr>
+                            <td>2024</td>
+                            <td>12,830</td>
+                            <td>3-Year Avg Growth</td>
+                        </tr>
+                        <tr>
+                            <td>2025</td>
+                            <td>12,167</td>
+                            <td>3-Year Avg Growth</td>
+                        </tr>
+                        <tr>
+                            <td>2026</td>
+                            <td>11,537</td>
+                            <td>3-Year Avg Growth</td>
+                        </tr>
+                        <tr>
+                            <td>2027</td>
+                            <td>10,941</td>
+                            <td>3-Year Avg Growth</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD SECTION -->
+    <section id="dashboard">
+        <h2>3️⃣ Dashboard Requirements</h2>
+        <div class="section-content">
+
+            <h3>Who's using this?</h3>
+            <p>The main users would be school leaders and the enrollment team who need to track their numbers
+                daily/weekly. Regional superintendents would check in periodically to compare schools. Leadership (CEO,
+                COO) would want high-level rollups, and finance/marketing would use it for budget and campaign planning.
+            </p>
+
+            <h3>What to show</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Metrics</th>
+                </tr>
+                <tr>
+                    <td>Core numbers</td>
+                    <td>Total enrollment, fill rate, applications received, yield rate, retention</td>
+                </tr>
+                <tr>
+                    <td>Trends</td>
+                    <td>YoY change, weekly application volume, waitlist movement</td>
+                </tr>
+                <tr>
+                    <td>Comparisons</td>
+                    <td>Actual vs target by school, by grade, by demographic</td>
+                </tr>
+                <tr>
+                    <td>Red flags</td>
+                    <td>Under-capacity grades, application drop-offs, unusual withdrawal spikes</td>
+                </tr>
+            </table>
+
+            <h3>Design notes</h3>
+            <p>Keep it simple: cards at top for KPIs, line charts for trends, bar charts for school comparisons. Should
+                work on mobile since school leaders are often on the go. Color-code by school type (SA vs. charter vs.
+                district) for quick scanning.</p>
+        </div>
+    </section>
+
+    <!-- ALL OUTPUTS SECTION -->
+    <section id="all-outputs">
+        <h2>📁 All Generated Outputs</h2>
+        <div class="section-content">
+
+            <h3>📄 cleaned_enrollment_data.csv</h3>
+            <p><strong>How it was generated:</strong></p>
+            <div class="code-block"><span class="comment"># load_enrollment_data()</span>
+                df = pd.read_csv(ENROLLMENT_FILE)
+                df['Year'] = df['Year'].apply(parse_school_year)
+                df['Total Enrollment'] = pd.to_numeric(df['Total Enrollment'], errors='coerce')
+
+                percent_columns = ['% Poverty', 'Economic Need Index', '% Female', '% Male',
+                '% Asian', '% Black', '% Hispanic', '% White',
+                '% Students with Disabilities', '% English Language Learners']
+                for col in percent_columns:
+                if col in df.columns:
+                df[col] = df[col].apply(clean_percentage)
+
+                df['School_Type'] = df.apply(get_school_type, axis=1)
+
+                <span class="comment"># save_outputs()</span>
+                df.to_csv(output_dir / 'cleaned_enrollment_data.csv', index=False)
+            </div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📊 cleaned_enrollment_data.csv</span>
+                    <span class="file-type">CSV - 2.29 MB | 9,332 records</span>
+                </div>
+                <div class="output-file-content">
+                    <p><em>Full cleaned dataset with all 9,332 school enrollment records, including:</em></p>
+                    <ul>
+                        <li>DBN (School ID), School Name, Year</li>
+                        <li>Total Enrollment, Grade breakdown</li>
+                        <li>Demographics (% Asian, Black, Hispanic, White)</li>
+                        <li>Economic indicators (% Poverty, Economic Need Index)</li>
+                        <li>School_Type classification (SA, C, DS)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📄 analysis_report.txt</h3>
+            <p><strong>How it was generated:</strong></p>
+            <div class="code-block"><span class="comment"># save_outputs()</span>
+                <span class="keyword">with</span> open(output_dir / 'analysis_report.txt', 'w') <span
+                    class="keyword">as</span> f:
+                f.write("SUCCESS ACADEMY ENROLLMENT ANALYSIS\n")
+                f.write("===================================\n\n")
+
+                f.write(f"Total records: {len(df):,}\n")
+                f.write(f"Years: {df['Year'].min()} - {df['Year'].max()}\n")
+
+                <span class="keyword">for</span> stype, count <span class="keyword">in</span>
+                df['School_Type'].value_counts().items():
+                label = {'SA': 'Success Academy', 'C': 'Other Charter', 'DS': 'District'}[stype]
+                f.write(f" {label}: {count:,}\n")
+            </div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📄 analysis_report.txt</span>
+                    <span class="file-type">TXT - 799 bytes</span>
+                </div>
+                <div class="output-file-content">
+                    <pre>============================================================
+SUCCESS ACADEMY ENROLLMENT ANALYSIS
+============================================================
+
+DATA SUMMARY
+----------------------------------------
+Total records analyzed: 9,332
+Years covered: 2018 - 2022
+Unique schools: 1,892
+
+SCHOOL TYPE BREAKDOWN
+----------------------------------------
+  District: 8,027 records
+  Other Charter: 1,149 records
+  Success Academy: 156 records
+
+5-YEAR PROJECTIONS (Success Academy)
+----------------------------------------
+ Year  Projected_Enrollment            Method
+ 2023                 13530 3-Year Avg Growth
+ 2024                 12830 3-Year Avg Growth
+ 2025                 12167 3-Year Avg Growth
+ 2026                 11537 3-Year Avg Growth
+ 2027                 10941 3-Year Avg Growth</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISUALIZATIONS SECTION -->
+    <section id="visualizations">
+        <h2>📈 Visualizations Gallery</h2>
+        <div class="section-content">
+
+            <h3>🖼️ enrollment_analysis.png</h3>
+            <p><strong>How it was generated:</strong></p>
+            <div class="code-block"><span class="comment"># create_visualizations()</span>
+                fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+                <span class="comment"># Enrollment trends chart</span>
+                <span class="keyword">for</span> school_type <span class="keyword">in</span> ['SA', 'C', 'DS']:
+                data = trends[trends['School_Type'] == school_type]
+                axes[0].plot(data['Year'], data['Total_Enrollment'], marker='o', label=label)
+
+                <span class="comment"># Projection chart</span>
+                axes[1].plot(hist.index, hist.values, marker='o', label='Historical')
+                axes[1].plot(proj['Year'], proj['Projected_Enrollment'], marker='s',
+                linestyle='--', label='Projected')
+
+                plt.savefig(output_dir / 'enrollment_analysis.png', dpi=150)
+            </div>
+
+            <div class="chart-container">
+                <img src="enrollment_analysis.png" alt="Enrollment Analysis">
+                <figcaption>Total Enrollment by School Type (left) and Success Academy 5-Year Projection (right)
+                </figcaption>
+            </div>
+
+
+
+            <div class="chart-grid">
+                <div>
+                    <h4>🖼️ demographics.png</h4>
+                    <p><strong>Code:</strong></p>
+                    <div class="code-block">demo = df.groupby('School_Type')[demo_cols].mean()
+                        demo.T.plot(kind='bar', ax=ax)
+                        plt.savefig('demographics.png')</div>
+                    <div class="chart-container">
+                        <img src="demographics.png" alt="Demographics">
+                    </div>
+                </div>
+            </div>
+
+            <h3>🖼️ economic_analysis.png</h3>
+            <div class="chart-container">
+                <img src="economic_analysis.png" alt="Economic Analysis">
+                <figcaption>Economic Need Index and Poverty levels by school type over time</figcaption>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI REPORTS SECTION -->
+    <section id="ai-reports">
+        <h2>🤖 AI-Generated Reports (Gemini)*</h2>
+        <div class="section-content">
+
+            <h3>📝 executive_summary.md</h3>
+            <p><strong>How it was generated:</strong></p>
+            <div class="code-block"><span class="comment"># generate_ai_analysis()</span>
+                data_summary = f"""
+                NYC School Enrollment Analysis (5-Year Period)
+                TRENDS:
+                {trends.to_string()}
+
+                PROJECTIONS:
+                {proj.to_string()}
+
+                Growth Rate: {projections['growth_rate']:.1%}
+                """
+
+                prompt = f"""As a data analyst for Success Academy, provide a concise executive summary:
+                1. MARKET OBSERVATIONS (3-4 bullets)
+                2. RECOMMENDED ADDITIONAL DATA (4 items)
+                3. 5-YEAR PROJECTION SUMMARY
+                4. DASHBOARD RECOMMENDATIONS
+                """
+
+                response = gemini_model.generate_content(prompt)
+
+                <span class="comment"># save_outputs()</span>
+                <span class="keyword">with</span> open(output_dir / 'executive_summary.md', 'w') <span
+                    class="keyword">as</span> f:
+                f.write("# Success Academy Analytics - Executive Summary\n\n")
+                f.write(ai_analysis)
+            </div>
+
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📝 executive_summary.md</span>
+                    <span class="file-type">MD - 3.43 KB</span>
+                </div>
+                <div class="output-file-content md-content">
+                    <h2>EXECUTIVE SUMMARY: NYC School Enrollment Analysis (2018-2022)</h2>
+
+                    <h3>1. MARKET OBSERVATIONS:</h3>
+                    <ul>
+                        <li><strong>Overall Enrollment Decline in District Schools:</strong> District Schools
+                            experienced a consistent decline in total enrollment over the 5-year period.</li>
+                        <li><strong>Success Academy Growth Stalled, then Declined:</strong> SA initially showed
+                            enrollment growth, peaking in 2020, but has since experienced a decline.</li>
+                        <li><strong>Charter School Enrollment Growth:</strong> Other charter enrollment experienced
+                            steady increases.</li>
+                        <li><strong>SA Average Enrollment Volatility:</strong> Average enrollment per school fluctuates
+                            significantly.</li>
+                    </ul>
+
+                    <h3>2. RECOMMENDED ADDITIONAL DATA:</h3>
+                    <ul>
+                        <li>Student Demographics (race/ethnicity, income levels, special needs status)</li>
+                        <li>Student Mobility (transfers between school types)</li>
+                        <li>Geographic Distribution (enrollment by neighborhood)</li>
+                        <li>Academic Performance Data (test scores, graduation rates)</li>
+                    </ul>
+
+                    <h3>3. 5-YEAR PROJECTION SUMMARY:</h3>
+                    <p>Projected decline from 14,268 (2022) to 10,941 (2027) based on -5.2% average growth rate.</p>
+
+                    <h3>4. DASHBOARD RECOMMENDATIONS:</h3>
+                    <ul>
+                        <li>Target Users: Leadership, school administrators, enrollment teams</li>
+                        <li>Key Metrics: Total enrollment, growth rate, retention rate, demographics</li>
+                        <li>Features: Interactive maps, trend charts, filtering, scenario planning</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📝 ai_market_analysis.md</h3>
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📝 ai_market_analysis.md</span>
+                    <span class="file-type">MD - 2.84 KB</span>
+                </div>
+                <div class="output-file-content md-content">
+                    <h3>Key Observations:</h3>
+                    <ul>
+                        <li>District School Enrollment Decline (-6% over 5 years)</li>
+                        <li>Charter School Growth (+19% over 5 years)</li>
+                        <li>SA maintains higher average enrollment per school (492-589) vs others</li>
+                        <li>SA enrollment peaked in 2020, post-pandemic decline</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📝 ai_projections.md</h3>
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📝 ai_projections.md</span>
+                    <span class="file-type">MD - 2.73 KB</span>
+                </div>
+                <div class="output-file-content md-content">
+                    <h3>Projection Methodology:</h3>
+                    <p>Linear regression model based on 3-year average growth rate.</p>
+                    <h3>Key Assumptions:</h3>
+                    <ul>
+                        <li>Recent trend continues at similar rate</li>
+                        <li>No major policy disruptions</li>
+                        <li>School capacity remains stable</li>
+                    </ul>
+                    <h3>Recommended Additional Data:</h3>
+                    <ul>
+                        <li>Application and Waitlist Data</li>
+                        <li>Student Attrition Rates</li>
+                        <li>Demographic Trends</li>
+                        <li>Competitor Analysis</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>📝 ai_dashboard_requirements.md</h3>
+            <div class="output-file">
+                <div class="output-file-header">
+                    <span>📝 ai_dashboard_requirements.md</span>
+                    <span class="file-type">MD - 9.34 KB</span>
+                </div>
+                <div class="output-file-content md-content">
+                    <p>Full dashboard specification including:</p>
+                    <ul>
+                        <li>Target Users (Primary & Secondary)</li>
+                        <li>Key Functionalities (Filtering, Comparisons, Drill-down, Export)</li>
+                        <li>Types of Metrics (KPIs, Trends, Comparisons, Alerts)</li>
+                        <li>UI/UX Considerations (Layout, Mobile, Visualizations, Colors)</li>
+                        <li>Additional Ideas (ML predictions, heatmaps, CRM integration)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPLETE FILE LIST -->
+    <section id="file-list">
+        <h2>📋 Complete Output File List</h2>
+        <div class="section-content">
+            <table>
+                <tr>
+                    <th>File</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>cleaned_enrollment_data.csv</td>
+                    <td>Data</td>
+                    <td>2.29 MB</td>
+                    <td>Full cleaned dataset (9,332 records)</td>
+                </tr>
+                <tr>
+                    <td>enrollment_trends.csv</td>
+                    <td>Data</td>
+                    <td>465 B</td>
+                    <td>Yearly aggregates by school type</td>
+                </tr>
+                <tr>
+                    <td>projections.csv</td>
+                    <td>Data</td>
+                    <td>178 B</td>
+                    <td>5-year SA enrollment projections</td>
+                </tr>
+                <tr>
+                    <td>demographic_breakdown.csv</td>
+                    <td>Data</td>
+                    <td>594 B</td>
+                    <td>Demographics by school type</td>
+                </tr>
+                <tr>
+                    <td>economic_metrics.csv</td>
+                    <td>Data</td>
+                    <td>729 B</td>
+                    <td>Poverty and Economic Need Index</td>
+                </tr>
+                <tr>
+                    <td>analysis_report.txt</td>
+                    <td>Report</td>
+                    <td>799 B</td>
+                    <td>Plain text summary</td>
+                </tr>
+                <tr>
+                    <td>executive_summary.md</td>
+                    <td>AI Report</td>
+                    <td>3.43 KB</td>
+                    <td>Gemini executive summary</td>
+                </tr>
+                <tr>
+                    <td>ai_market_analysis.md</td>
+                    <td>AI Report</td>
+                    <td>2.84 KB</td>
+                    <td>Market observations</td>
+                </tr>
+                <tr>
+                    <td>ai_projections.md</td>
+                    <td>AI Report</td>
+                    <td>2.73 KB</td>
+                    <td>Projection methodology</td>
+                </tr>
+                <tr>
+                    <td>ai_dashboard_requirements.md</td>
+                    <td>AI Report</td>
+                    <td>9.34 KB</td>
+                    <td>Dashboard specification</td>
+                </tr>
+                <tr>
+                    <td>enrollment_analysis.png</td>
+                    <td>Chart</td>
+                    <td>97 KB</td>
+                    <td>Enrollment trends + projections</td>
+                </tr>
+
+                <tr>
+                    <td>demographics.png</td>
+                    <td>Chart</td>
+                    <td>50 KB</td>
+                    <td>Demographic breakdown</td>
+                </tr>
+
+                <tr>
+                    <td>economic_analysis.png</td>
+                    <td>Chart</td>
+                    <td>103 KB</td>
+                    <td>Economic metrics</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <p>Success Academy Enrollment Analysis | Case Study Deliverable</p>
+        <p>Generated by <code>success_academy_analytics.py</code> with Google Gemini AI</p>
+    </footer>
+
+</body>
+
+</html>
